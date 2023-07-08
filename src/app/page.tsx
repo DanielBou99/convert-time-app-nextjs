@@ -1,8 +1,14 @@
 "use client";
-import { Select, Option } from "@material-tailwind/react";
-import React, { useEffect, useState } from "react";
-import "tw-elements/dist/css/tw-elements.min.css";
-import { Datepicker, Input, initTE, Timepicker } from "tw-elements";
+import React, { useState } from "react"
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import { TimePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 
 export default function Home() {
   const countries = [
@@ -15,83 +21,93 @@ export default function Home() {
       label: "Peru",
     },
   ];
+  const [selectedFirstCountry, setSelectedFirstCountry] = useState(
+    countries[0].id
+  );
+  const [selectedSecondCountry, setSelectedSecondCountry] = useState(
+    countries[1].id
+  );
+  const [resultTime, setResultTime] = useState("Test");
 
-  const [selectedFirstCountry, setSelectedFirstCountry] = useState("");
-  const [selectedSecondCountry, setSelectedSecondCountry] = useState("");
+  const selectedCountryOneChange = (event: any) => {
+    const countrySelected = findCountryById(event.target.value);
+    if (countrySelected) setSelectedFirstCountry(countrySelected.id);
+  };
 
-  useEffect(() => {
-    initTE({ Datepicker, Input, Timepicker });
-  }, []);
+  const selectedCountryTwoChange = (event: any) => {
+    const countrySelected = findCountryById(event.target.value);
+    if (countrySelected) setSelectedSecondCountry(countrySelected.id);
+  };
+
+  const findCountryById = (id: number) => {
+    return countries.find((country) => country.id === id);
+  };
+
+  const timePickerChanged = (event: any) => {
+    console.log(event);
+  };
 
   return (
     <section>
-      <h1 className="font-bold text-4xl mb-4">Convert Time</h1>
-
-      <div className="flex flex-row items-center">
+      {selectedFirstCountry}
+      <h1>Convert Time</h1>
+      <div>
         <div>
           <p>Country 1</p>
-          <div className="w-72">
+          <FormControl fullWidth>
+            <InputLabel id="select-country-one">Country 1</InputLabel>
             <Select
-              onChange={(event: any) => setSelectedFirstCountry(event)}
-              label="Select Country One"
+              labelId="select-country-one"
+              id="select-country-one"
+              label="Country 1"
+              onChange={selectedCountryOneChange}
+              value={selectedFirstCountry}
             >
               {countries.map((country) => (
-                <Option key={country.id} value={String(country.id)}>
+                <MenuItem key={country.id} value={country.id}>
                   {country.label}
-                </Option>
+                </MenuItem>
               ))}
             </Select>
-          </div>
+          </FormControl>
         </div>
-        <div className="ml-1.5">
+        <div>
           <p>Time in country 1</p>
-          <div
-            className="relative"
-            data-te-timepicker-init
-            data-te-input-wrapper-init
-          >
-            <input
-              type="text"
-              className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-              id="form1"
-            />
-            <label
-              htmlFor="form1"
-              className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-            >
-              Select a time
-            </label>
-          </div>
+          <TimePicker
+            label="Uncontrolled picker"
+            onChange={timePickerChanged}
+            defaultValue={dayjs("2022-04-17T15:30")}
+          />
         </div>
       </div>
-
-      <div className="flex flex-row items-center">
+      <div>
         <div>
           <p>Country 2</p>
-          <div className="w-72">
+          <FormControl fullWidth>
+            <InputLabel id="select-country-two">Country 2</InputLabel>
             <Select
-              onChange={(event: any) => setSelectedSecondCountry(event)}
-              label="Select Country Two"
+              labelId="select-country-two"
+              id="select-country-two"
+              label="Country 2"
+              onChange={selectedCountryTwoChange}
+              value={selectedSecondCountry}
             >
               {countries.map((country) => (
-                <Option key={country.id} value={String(country.id)}>
+                <MenuItem key={country.id} value={country.id}>
                   {country.label}
-                </Option>
+                </MenuItem>
               ))}
             </Select>
-          </div>
+          </FormControl>
         </div>
-        <div className="ml-1.5">
+        <div>
           <p>Time in country 2</p>
-          <div>
-            <input
-              type="text"
-              className="peer block min-h-[auto] w-full rounded border-0 bg-neutral-100 px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:bg-neutral-700 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-              placeholder="Disabled input"
-              aria-label="Result time"
-              disabled
-              value="Result"/>
-          </div>
+          <TextField
+            disabled
+            id="outlined-disabled"
+            label="Disabled"
+            defaultValue={resultTime}
+          />
         </div>
       </div>
     </section>
