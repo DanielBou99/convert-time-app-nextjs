@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import {
+  Box,
+  Button,
   Container,
   FormControl,
   InputLabel,
@@ -9,22 +11,20 @@ import {
   TextField,
 } from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
-import timezones from 'timezones-list';
+import timezones from "timezones-list";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export default function Home() {
-
   const [selectedFirstTimeZone, setSelectedFirstTimeZone] = useState(
-    timezones[0].tzCode
+    dayjs.tz.guess()
   );
-  const [selectedSecondTimeZone, setSelectedSecondTimeZone] = useState(
-    timezones[1].tzCode
-  );
+  const [selectedSecondTimeZone, setSelectedSecondTimeZone] = useState();
+  const [timePicker, setTimePicker] = useState<Dayjs>(dayjs());
   const [resultTime, setResultTime] = useState("Test");
 
   const selectedTimeZoneOneChange = (event: any) => {
@@ -32,11 +32,17 @@ export default function Home() {
   };
 
   const selectedTimeZoneTwoChange = (event: any) => {
-    setSelectedSecondTimeZone(event.target.value)
+    setSelectedSecondTimeZone(event.target.value);
   };
 
-  const timePickerChanged = (event: any) => {
-    console.log(dayjs.tz.guess());
+  const timePickerChanged = (event: Dayjs) => {
+    setTimePicker(event);
+  };
+
+  const convertAction = () => {
+    const dateInTimeZoneSelected = timePicker.tz(selectedFirstTimeZone, true);
+    const dateConverted = dateInTimeZoneSelected.tz(selectedSecondTimeZone);
+    setResultTime(dateConverted.format("HH:mm"));
   };
 
   return (
@@ -101,6 +107,11 @@ export default function Home() {
           />
         </div>
       </div>
+      <Box sx={{ mt: 2 }}>
+        <Button variant="contained" onClick={convertAction}>
+          Convert
+        </Button>
+      </Box>
     </Container>
   );
 }
