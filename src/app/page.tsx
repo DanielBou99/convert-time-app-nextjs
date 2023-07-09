@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import {
+  Autocomplete,
   Box,
   Button,
   Container,
@@ -14,29 +15,31 @@ import { TimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
-import timezones from "timezones-list";
+import timezones, { TimeZone } from "timezones-list";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export default function Home() {
-  const [selectedFirstTimeZone, setSelectedFirstTimeZone] = useState(
+  const [selectedFirstTimeZone, setSelectedFirstTimeZone] = useState<string>(
     dayjs.tz.guess()
   );
-  const [selectedSecondTimeZone, setSelectedSecondTimeZone] = useState();
+  const [selectedSecondTimeZone, setSelectedSecondTimeZone] =
+    useState<string>("");
   const [timePicker, setTimePicker] = useState<Dayjs>(dayjs());
   const [resultTime, setResultTime] = useState("Test");
 
-  const selectedTimeZoneOneChange = (event: any) => {
-    setSelectedFirstTimeZone(event.target.value);
+  const selectedTimeZoneOneChange = (event: TimeZone | null) => {
+    if (event) setSelectedFirstTimeZone(event.tzCode);
   };
 
-  const selectedTimeZoneTwoChange = (event: any) => {
-    setSelectedSecondTimeZone(event.target.value);
+  const selectedTimeZoneTwoChange = (event: TimeZone | null) => {
+    if (event) setSelectedSecondTimeZone(event.tzCode);
   };
 
-  const timePickerChanged = (event: Dayjs) => {
-    setTimePicker(event);
+  const timePickerChanged = (event: Dayjs | null) => {
+    if (event) setTimePicker(event);
   };
 
   const convertAction = () => {
@@ -51,27 +54,23 @@ export default function Home() {
       <div>
         <div>
           <p>Time Zone 1</p>
-          <FormControl fullWidth>
-            <InputLabel id="select-timezone-one">Time Zone 1</InputLabel>
-            <Select
-              labelId="select-timezone-one"
-              id="select-timezone-one"
-              label="Time Zone 1"
-              onChange={selectedTimeZoneOneChange}
-              value={selectedFirstTimeZone}
-            >
-              {timezones.map((tz) => (
-                <MenuItem key={tz.tzCode} value={tz.tzCode}>
-                  {tz.tzCode}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Autocomplete
+            value={timezones[0]}
+            disablePortal
+            options={timezones}
+            sx={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Time Zone 1" />
+            )}
+            onChange={(event: any, newValue: TimeZone | null) => {
+              selectedTimeZoneOneChange(newValue);
+            }}
+          />
         </div>
         <div>
           <p>Time in Time Zone 1</p>
           <TimePicker
-            label="Uncontrolled picker"
+            label="Time in Time Zone 1"
             onChange={timePickerChanged}
             defaultValue={dayjs(new Date())}
           />
@@ -80,25 +79,20 @@ export default function Home() {
       <div>
         <div>
           <p>Time Zone 2</p>
-          <FormControl fullWidth>
-            <InputLabel id="select-timezone-two">Time Zone 2</InputLabel>
-            <Select
-              labelId="select-timezone-two"
-              id="select-timezone-two"
-              label="Time Zone 2"
-              onChange={selectedTimeZoneTwoChange}
-              value={selectedSecondTimeZone}
-            >
-              {timezones.map((tz) => (
-                <MenuItem key={tz.tzCode} value={tz.tzCode}>
-                  {tz.tzCode}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Autocomplete
+            disablePortal
+            options={timezones}
+            sx={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Time Zone 2" />
+            )}
+            onChange={(event: any, newValue: TimeZone | null) => {
+              selectedTimeZoneTwoChange(newValue);
+            }}
+          />
         </div>
         <div>
-          <p>Time in Time Zone s2</p>
+          <p>Time in Time Zone 2</p>
           <TextField
             disabled
             id="outlined-disabled"
