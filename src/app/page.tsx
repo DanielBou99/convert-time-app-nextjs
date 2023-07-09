@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Container,
-  Grid,
   TextField,
 } from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers";
@@ -74,7 +73,7 @@ export default function Home() {
               options={timezones}
               sx={{ width: 300 }}
               renderInput={(params) => (
-                <TextField {...params} label="Time Zone 1" />
+                <TextField {...params} label="Time Zone 1" size="small" />
               )}
               onChange={(event: any, newValue: TimeZone | null) => {
                 selectedTimeZoneOneChange(newValue);
@@ -98,7 +97,7 @@ export default function Home() {
               options={timezones}
               sx={{ width: 300 }}
               renderInput={(params) => (
-                <TextField {...params} label="Time Zone 2" />
+                <TextField {...params} label="Time Zone 2" size="small" />
               )}
               onChange={(event: any, newValue: TimeZone | null) => {
                 selectedTimeZoneTwoChange(newValue);
@@ -107,7 +106,7 @@ export default function Home() {
           </div>
           <div>
             <p>Time in Time Zone 2</p>
-            <TextField disabled defaultValue={resultTime} />
+            <TextField disabled defaultValue={resultTime} size="small" />
           </div>
         </div>
         <Box sx={{ mt: 2 }}>
