@@ -1,41 +1,37 @@
 "use client";
-import React, { useState } from "react";
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Container,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Autocomplete, Box, Button, Container, TextField } from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import timezones, { TimeZone } from "timezones-list";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export default function Home() {
-  const [selectedFirstTimeZone, setSelectedFirstTimeZone] = useState<string>(
-    dayjs.tz.guess()
-  );
+  const [selectedFirstTimeZone, setSelectedFirstTimeZone] =
+    useState<TimeZone | null>(null);
   const [selectedSecondTimeZone, setSelectedSecondTimeZone] =
-    useState<string>("");
+    useState<TimeZone | null>(null);
   const [timePicker, setTimePicker] = useState<Dayjs>(dayjs());
-  const [resultTime, setResultTime] = useState("Test");
+  const [resultTime, setResultTime] = useState("");
+
+  useEffect(() => {
+    const timeZoneUser: string = dayjs.tz.guess();
+    const timeZoneFound: TimeZone | undefined = timezones.find(
+      (tz) => tz.tzCode === timeZoneUser
+    );
+    if (timeZoneFound) setSelectedFirstTimeZone(timeZoneFound);
+  }, []);
 
   const selectedTimeZoneOneChange = (event: TimeZone | null) => {
-    if (event) setSelectedFirstTimeZone(event.tzCode);
+    if (event) setSelectedFirstTimeZone(event);
   };
 
   const selectedTimeZoneTwoChange = (event: TimeZone | null) => {
-    if (event) setSelectedSecondTimeZone(event.tzCode);
+    if (event) setSelectedSecondTimeZone(event);
   };
 
   const timePickerChanged = (event: Dayjs | null) => {
@@ -43,8 +39,8 @@ export default function Home() {
   };
 
   const convertAction = () => {
-    const dateInTimeZoneSelected = timePicker.tz(selectedFirstTimeZone, true);
-    const dateConverted = dateInTimeZoneSelected.tz(selectedSecondTimeZone);
+    const dateInTimeZoneSelected = timePicker.tz(selectedFirstTimeZone?.tzCode, true);
+    const dateConverted = dateInTimeZoneSelected.tz(selectedSecondTimeZone?.tzCode);
     setResultTime(dateConverted.format("HH:mm"));
   };
 
@@ -55,7 +51,7 @@ export default function Home() {
         <div>
           <p>Time Zone 1</p>
           <Autocomplete
-            value={timezones[0]}
+            value={selectedFirstTimeZone}
             disablePortal
             options={timezones}
             sx={{ width: 300 }}
@@ -95,13 +91,11 @@ export default function Home() {
           <p>Time in Time Zone 2</p>
           <TextField
             disabled
-            id="outlined-disabled"
-            label="Disabled"
             defaultValue={resultTime}
           />
         </div>
       </div>
-      <Box sx={{ mt: 2 }}>
+      <Box sx={{ mt: 2}}>
         <Button variant="contained" onClick={convertAction}>
           Convert
         </Button>
