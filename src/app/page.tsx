@@ -1,6 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Autocomplete, Box, Button, Container, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+} from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import timezone from "dayjs/plugin/timezone";
@@ -39,66 +46,75 @@ export default function Home() {
   };
 
   const convertAction = () => {
-    const dateInTimeZoneSelected = timePicker.tz(selectedFirstTimeZone?.tzCode, true);
-    const dateConverted = dateInTimeZoneSelected.tz(selectedSecondTimeZone?.tzCode);
+    const dateInTimeZoneSelected = timePicker.tz(
+      selectedFirstTimeZone?.tzCode,
+      true
+    );
+    const dateConverted = dateInTimeZoneSelected.tz(
+      selectedSecondTimeZone?.tzCode
+    );
     setResultTime(dateConverted.format("HH:mm"));
   };
 
   return (
     <Container maxWidth="sm">
-      <h1>Convert Time</h1>
-      <div>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <h1>Convert Time</h1>
         <div>
-          <p>Time Zone 1</p>
-          <Autocomplete
-            value={selectedFirstTimeZone}
-            disablePortal
-            options={timezones}
-            sx={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Time Zone 1" />
-            )}
-            onChange={(event: any, newValue: TimeZone | null) => {
-              selectedTimeZoneOneChange(newValue);
-            }}
-          />
+          <div>
+            <p>Time Zone 1</p>
+            <Autocomplete
+              value={selectedFirstTimeZone}
+              disablePortal
+              options={timezones}
+              sx={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Time Zone 1" />
+              )}
+              onChange={(event: any, newValue: TimeZone | null) => {
+                selectedTimeZoneOneChange(newValue);
+              }}
+            />
+          </div>
+          <div>
+            <p>Time in Time Zone 1</p>
+            <TimePicker
+              label="Time in Time Zone 1"
+              onChange={timePickerChanged}
+              defaultValue={dayjs(new Date())}
+            />
+          </div>
         </div>
         <div>
-          <p>Time in Time Zone 1</p>
-          <TimePicker
-            label="Time in Time Zone 1"
-            onChange={timePickerChanged}
-            defaultValue={dayjs(new Date())}
-          />
+          <div>
+            <p>Time Zone 2</p>
+            <Autocomplete
+              disablePortal
+              options={timezones}
+              sx={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Time Zone 2" />
+              )}
+              onChange={(event: any, newValue: TimeZone | null) => {
+                selectedTimeZoneTwoChange(newValue);
+              }}
+            />
+          </div>
+          <div>
+            <p>Time in Time Zone 2</p>
+            <TextField disabled defaultValue={resultTime} />
+          </div>
         </div>
-      </div>
-      <div>
-        <div>
-          <p>Time Zone 2</p>
-          <Autocomplete
-            disablePortal
-            options={timezones}
-            sx={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Time Zone 2" />
-            )}
-            onChange={(event: any, newValue: TimeZone | null) => {
-              selectedTimeZoneTwoChange(newValue);
-            }}
-          />
-        </div>
-        <div>
-          <p>Time in Time Zone 2</p>
-          <TextField
-            disabled
-            defaultValue={resultTime}
-          />
-        </div>
-      </div>
-      <Box sx={{ mt: 2}}>
-        <Button variant="contained" onClick={convertAction}>
-          Convert
-        </Button>
+        <Box sx={{ mt: 2 }}>
+          <Button variant="contained" onClick={convertAction}>
+            Convert
+          </Button>
+        </Box>
       </Box>
     </Container>
   );
