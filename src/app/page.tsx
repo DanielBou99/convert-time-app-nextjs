@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Container,
+  Paper,
   TextField,
 } from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers";
@@ -57,64 +58,65 @@ export default function Home() {
 
   return (
     <Container maxWidth="sm">
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
+      <Paper
+        variant="outlined"
+        sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
       >
-        <h1>Convert Time</h1>
-        <div>
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <h1>Convert Time</h1>
           <div>
-            <p>Time Zone 1</p>
-            <Autocomplete
-              value={selectedFirstTimeZone}
-              disablePortal
-              options={timezones}
-              sx={{ width: 300 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Time Zone 1" size="small" />
-              )}
-              onChange={(event: any, newValue: TimeZone | null) => {
-                selectedTimeZoneOneChange(newValue);
-              }}
-            />
+            <div>
+              <p>Time Zone 1</p>
+              <Autocomplete
+                value={selectedFirstTimeZone}
+                disablePortal
+                options={timezones}
+                renderInput={(params) => (
+                  <TextField {...params} label="Time Zone 1" size="small" />
+                )}
+                onChange={(event: any, newValue: TimeZone | null) => {
+                  selectedTimeZoneOneChange(newValue);
+                }}
+              />
+            </div>
+            <div>
+              <p>Time in Time Zone 1</p>
+              <TimePicker
+                label="Time in Time Zone 1"
+                onChange={timePickerChanged}
+                defaultValue={dayjs(new Date())}
+              />
+            </div>
+            <div>
+              <p>Time Zone 2</p>
+              <Autocomplete
+                disablePortal
+                options={timezones}
+                renderInput={(params) => (
+                  <TextField {...params} label="Time Zone 2" size="small" />
+                )}
+                onChange={(event: any, newValue: TimeZone | null) => {
+                  selectedTimeZoneTwoChange(newValue);
+                }}
+              />
+            </div>
+            <Box sx={{ mt: 2 }}>
+            <Button variant="contained" onClick={convertAction}>
+              Convert
+            </Button>
+            <div>
+              <p>Time in Time Zone 2</p>
+              <TextField disabled defaultValue={resultTime} size="small" />
+            </div>
+          </Box>
           </div>
-          <div>
-            <p>Time in Time Zone 1</p>
-            <TimePicker
-              label="Time in Time Zone 1"
-              onChange={timePickerChanged}
-              defaultValue={dayjs(new Date())}
-            />
-          </div>
-        </div>
-        <div>
-          <div>
-            <p>Time Zone 2</p>
-            <Autocomplete
-              disablePortal
-              options={timezones}
-              sx={{ width: 300 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Time Zone 2" size="small" />
-              )}
-              onChange={(event: any, newValue: TimeZone | null) => {
-                selectedTimeZoneTwoChange(newValue);
-              }}
-            />
-          </div>
-          <div>
-            <p>Time in Time Zone 2</p>
-            <TextField disabled defaultValue={resultTime} size="small" />
-          </div>
-        </div>
-        <Box sx={{ mt: 2 }}>
-          <Button variant="contained" onClick={convertAction}>
-            Convert
-          </Button>
         </Box>
-      </Box>
+      </Paper>
     </Container>
   );
 }
