@@ -74,7 +74,10 @@ export default function Home() {
           <div>
             <div>
               <Box display="flex" alignItems="center">
-                <Tooltip title="Choose the initial local time zone that will be converted">
+                <Tooltip
+                  title="Choose the initial local time zone that will be converted"
+                  enterTouchDelay={0}
+                >
                   <HelpIcon color="primary" />
                 </Tooltip>
                 <p>From Local</p>
@@ -93,7 +96,10 @@ export default function Home() {
             </div>
             <div>
               <Box display="flex" alignItems="center">
-                <Tooltip title="Choose the initial time (Hour and Minute) that will be converted">
+                <Tooltip
+                  title="Choose the initial time (Hour and Minute) that will be converted"
+                  enterTouchDelay={0}
+                >
                   <HelpIcon color="primary" />
                 </Tooltip>
                 <p>From Time</p>
@@ -106,7 +112,10 @@ export default function Home() {
             </div>
             <div>
               <Box display="flex" alignItems="center">
-                <Tooltip title="Choose which location you want to know the time compared to the previously provided location and time.">
+                <Tooltip
+                  title="Choose which location you want to know the time compared to the previously provided location and time."
+                  enterTouchDelay={0}
+                >
                   <HelpIcon color="primary" />
                 </Tooltip>
                 <p>To Local</p>
