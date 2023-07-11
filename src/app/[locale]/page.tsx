@@ -63,17 +63,6 @@ export default function Home() {
 
   const t = useTranslations('Index');
 
-  /*
-  const pathname = usePathname();
-  const router = useRouter();
-  const handleChangeLanguage = (event: any) => {
-    const language = event.target.value
-    console.log(event.target.value);
-    console.log(pathname);
-    console.log(`/${language}${pathname}`);
-    router.push(`/${language}${pathname}`);
-  };*/
-
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -93,19 +82,19 @@ export default function Home() {
                 <div>
                   <Box display="flex" alignItems="center">
                     <Tooltip
-                      title="Choose the initial local time zone that will be converted"
+                      title={t('helpFromLocal')}
                       enterTouchDelay={0}
                     >
                       <HelpIcon color="primary" />
                     </Tooltip>
-                    <p>From Local</p>
+                    <p>{t('fromLocal')}</p>
                   </Box>
                   <Autocomplete
                     value={selectedFirstTimeZone}
                     disablePortal
                     options={timezones}
                     renderInput={(params) => (
-                      <TextField {...params} label="From Local" size="small" />
+                      <TextField {...params} label={t('fromLocal')} size="small" />
                     )}
                     onChange={(event: any, newValue: TimeZone | null) => {
                       selectedTimeZoneOneChange(newValue);
@@ -115,15 +104,15 @@ export default function Home() {
                 <div>
                   <Box display="flex" alignItems="center">
                     <Tooltip
-                      title="Choose the initial time (Hour and Minute) that will be converted"
+                      title={t('helpFromTime')}
                       enterTouchDelay={0}
                     >
                       <HelpIcon color="primary" />
                     </Tooltip>
-                    <p>From Time</p>
+                    <p>{t('fromTime')}</p>
                   </Box>
                   <TimePicker
-                    label="From Time"
+                    label={t('fromTime')}
                     onChange={timePickerChanged}
                     defaultValue={dayjs(new Date())}
                   />
@@ -131,18 +120,18 @@ export default function Home() {
                 <div>
                   <Box display="flex" alignItems="center">
                     <Tooltip
-                      title="Choose which location you want to know the time compared to the previously provided location and time."
+                      title={t('helpToLocal')}
                       enterTouchDelay={0}
                     >
                       <HelpIcon color="primary" />
                     </Tooltip>
-                    <p>To Local</p>
+                    <p>{t('toLocal')}</p>
                   </Box>
                   <Autocomplete
                     disablePortal
                     options={timezones}
                     renderInput={(params) => (
-                      <TextField {...params} label="To Local" size="small" />
+                      <TextField {...params} label={t('toLocal')} size="small" />
                     )}
                     onChange={(event: any, newValue: TimeZone | null) => {
                       selectedTimeZoneTwoChange(newValue);
@@ -151,10 +140,10 @@ export default function Home() {
                 </div>
                 <Box sx={{ mt: 2 }}>
                   <Button variant="contained" onClick={convertAction}>
-                    Convert
+                    {t('convert')}
                   </Button>
                   <div>
-                    <p>Time Result</p>
+                    <p>{t('timeResult')}</p>
                     <TextField
                       disabled
                       defaultValue={resultTime}
