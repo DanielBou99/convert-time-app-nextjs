@@ -21,7 +21,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useTranslations } from "next-intl";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -86,7 +86,7 @@ export default function Home() {
   const action = (
     <React.Fragment>
       <Button size="small" onClick={handleCloseSnackbarCopyResult}>
-        UNDO
+        {t("undo")}
       </Button>
       <IconButton
         size="small"
@@ -193,7 +193,7 @@ export default function Home() {
                   open={open}
                   autoHideDuration={6000}
                   onClose={handleCloseSnackbarCopyResult}
-                  message="Horário copiado"
+                  message={t("resultTimeCopied")}
                   action={action}
                 />
               </div>

@@ -8,7 +8,9 @@
     "timeResult": "Time Result",
     "helpFromLocal": "Choose the initial local time zone that will be converted",
     "helpFromTime": "Choose the initial time (Hour and Minute) that will be converted",
-    "helpToLocal": "Choose which location you want to know the time compared to the previously provided location and time"
+    "helpToLocal": "Choose which location you want to know the time compared to the previously provided location and time",
+    "undo": "UNDO",
+    "resultTimeCopied": "Time copied"
   },
   "TranslateSelector": {
     "language": "Language",
