@@ -11,11 +11,43 @@ import { usePathname } from "next-intl/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CookiesProvider, useCookies } from "react-cookie";
+import { styled } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
 
 interface ILanguage {
   label: string;
   code: string;
 }
+
+const BootstrapInput = styled(InputBase)(({ theme }) => ({
+  "& .MuiInputBase-input": {
+    borderRadius: 4,
+    position: "relative",
+    backgroundColor: theme.palette.background.paper,
+    border: "1px solid #ced4da",
+    fontSize: 16,
+    padding: "10px 26px 10px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
+    "&:focus": {
+      borderRadius: 4,
+      borderColor: "#80bdff",
+      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+    },
+  },
+}));
 
 export default function TranslateSelector() {
   const [cookies, setCookie] = useCookies();
@@ -64,6 +96,7 @@ export default function TranslateSelector() {
           value={selectedLanguage}
           label="Language"
           onChange={changeLanguage}
+          input={<BootstrapInput />}
         >
           {allLanguages.map((lang) => (
             <MenuItem value={lang.code} key={lang.code}>
