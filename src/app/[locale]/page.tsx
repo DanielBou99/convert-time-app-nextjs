@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Autocomplete,
   Box,
   Button,
   Container,
+  IconButton,
   Paper,
   TextField,
   Tooltip,
@@ -18,6 +19,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useTranslations } from "next-intl";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -61,7 +63,11 @@ export default function Home() {
     setResultTime(dateConverted.format("HH:mm"));
   };
 
-  const t = useTranslations('Index');
+  const t = useTranslations("Index");
+
+  const copyResult = () => {
+    navigator.clipboard.writeText(resultTime);
+  };
 
   return (
     <>
@@ -77,24 +83,25 @@ export default function Home() {
               justifyContent="center"
               alignItems="center"
             >
-              <h1>{t('title')}</h1>
+              <h1>{t("title")}</h1>
               <div>
                 <div>
                   <Box display="flex" alignItems="center">
-                    <Tooltip
-                      title={t('helpFromLocal')}
-                      enterTouchDelay={0}
-                    >
+                    <Tooltip title={t("helpFromLocal")} enterTouchDelay={0}>
                       <HelpIcon color="primary" />
                     </Tooltip>
-                    <p>{t('fromLocal')}</p>
+                    <p>{t("fromLocal")}</p>
                   </Box>
                   <Autocomplete
                     value={selectedFirstTimeZone}
                     disablePortal
                     options={timezones}
                     renderInput={(params) => (
-                      <TextField {...params} label={t('fromLocal')} size="small" />
+                      <TextField
+                        {...params}
+                        label={t("fromLocal")}
+                        size="small"
+                      />
                     )}
                     onChange={(event: any, newValue: TimeZone | null) => {
                       selectedTimeZoneOneChange(newValue);
@@ -103,35 +110,33 @@ export default function Home() {
                 </div>
                 <div>
                   <Box display="flex" alignItems="center">
-                    <Tooltip
-                      title={t('helpFromTime')}
-                      enterTouchDelay={0}
-                    >
+                    <Tooltip title={t("helpFromTime")} enterTouchDelay={0}>
                       <HelpIcon color="primary" />
                     </Tooltip>
-                    <p>{t('fromTime')}</p>
+                    <p>{t("fromTime")}</p>
                   </Box>
                   <TimePicker
-                    label={t('fromTime')}
+                    label={t("fromTime")}
                     onChange={timePickerChanged}
                     defaultValue={dayjs(new Date())}
                   />
                 </div>
                 <div>
                   <Box display="flex" alignItems="center">
-                    <Tooltip
-                      title={t('helpToLocal')}
-                      enterTouchDelay={0}
-                    >
+                    <Tooltip title={t("helpToLocal")} enterTouchDelay={0}>
                       <HelpIcon color="primary" />
                     </Tooltip>
-                    <p>{t('toLocal')}</p>
+                    <p>{t("toLocal")}</p>
                   </Box>
                   <Autocomplete
                     disablePortal
                     options={timezones}
                     renderInput={(params) => (
-                      <TextField {...params} label={t('toLocal')} size="small" />
+                      <TextField
+                        {...params}
+                        label={t("toLocal")}
+                        size="small"
+                      />
                     )}
                     onChange={(event: any, newValue: TimeZone | null) => {
                       selectedTimeZoneTwoChange(newValue);
@@ -140,15 +145,18 @@ export default function Home() {
                 </div>
                 <Box sx={{ mt: 2 }}>
                   <Button variant="contained" onClick={convertAction}>
-                    {t('convert')}
+                    {t("convert")}
                   </Button>
                   <div>
-                    <p>{t('timeResult')}</p>
+                    <p>{t("timeResult")}</p>
                     <TextField
                       disabled
                       defaultValue={resultTime}
                       size="small"
                     />
+                    <IconButton onClick={copyResult}>
+                      <ContentCopyIcon />
+                    </IconButton>
                   </div>
                 </Box>
               </div>
