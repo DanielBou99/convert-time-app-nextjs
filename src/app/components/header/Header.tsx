@@ -22,9 +22,8 @@ import ListItemText from "@mui/material/ListItemText";
 //import Link from "next-intl/link";
 import { useRouter } from "next-intl/client";
 import TranslateSelector from "./TranslateSelector";
-import HomeIcon from '@mui/icons-material/Home';
-import InfoIcon from '@mui/icons-material/Info';
-
+import HomeIcon from "@mui/icons-material/Home";
+import InfoIcon from "@mui/icons-material/Info";
 
 const navigationLinks = [
   { id: 1, name: "Home", href: "/" },
@@ -59,7 +58,7 @@ export default function Header() {
                 </Link>
               </Box>
             ))}
-            <Box sx={{ ml: 2 }}>
+            <Box sx={{ ml: 2, width: 120 }}>
               <TranslateSelector />
             </Box>
           </Hidden>
@@ -85,7 +84,7 @@ export default function Header() {
         <List component="nav">
           <ListItemButton onClick={() => toPage("/")}>
             <ListItemIcon>
-              <HomeIcon  />
+              <HomeIcon />
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItemButton>

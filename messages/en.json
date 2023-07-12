@@ -9,5 +9,13 @@
     "helpFromLocal": "Choose the initial local time zone that will be converted",
     "helpFromTime": "Choose the initial time (Hour and Minute) that will be converted",
     "helpToLocal": "Choose which location you want to know the time compared to the previously provided location and time"
+  },
+  "TranslateSelector": {
+    "languages": {
+      "labelPt": "Portuguese",
+      "codePt": "pt",     
+      "labelEn": "English",
+      "codeEn": "en"
+    }  
   }
 }

@@ -9,5 +9,13 @@
     "helpFromLocal": "Escolha o fuso horário do local inicial que será convertido",
     "helpFromTime": "Escolha o horário inicial que será convertido",
     "helpToLocal": "Escolha qual local você deseja saber o tempo em comparação com o local e o horário fornecidos anteriormente"
+  },
+  "TranslateSelector": {
+    "languages": {
+      "labelPt": "Português",
+      "codePt": "pt",     
+      "labelEn": "Inglês",
+      "codeEn": "en"
+    }  
   }
 }
