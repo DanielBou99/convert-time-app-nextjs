@@ -7,6 +7,7 @@ import {
   Container,
   IconButton,
   Paper,
+  Snackbar,
   TextField,
   Tooltip,
 } from "@mui/material";
@@ -20,6 +21,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useTranslations } from "next-intl";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import CloseIcon from '@mui/icons-material/Close';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -31,6 +33,7 @@ export default function Home() {
     useState<TimeZone | null>(null);
   const [timePicker, setTimePicker] = useState<Dayjs>(dayjs());
   const [resultTime, setResultTime] = useState("");
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const timeZoneUser: string = dayjs.tz.guess();
@@ -67,7 +70,34 @@ export default function Home() {
 
   const copyResult = () => {
     navigator.clipboard.writeText(resultTime);
+    setOpen(true);
   };
+
+  const handleCloseSnackbarCopyResult = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <Button size="small" onClick={handleCloseSnackbarCopyResult}>
+        UNDO
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseSnackbarCopyResult}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   return (
     <>
@@ -159,6 +189,13 @@ export default function Home() {
                     </IconButton>
                   </div>
                 </Box>
+                <Snackbar
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={handleCloseSnackbarCopyResult}
+                  message="Horário copiado"
+                  action={action}
+                />
               </div>
             </Box>
           </Paper>
