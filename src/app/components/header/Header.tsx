@@ -33,6 +33,7 @@ export default function Header() {
   const router = useRouter();
 
   const toPage = (link: string) => {
+    setOpen(false);
     router.push(link);
   };
 
@@ -61,8 +62,8 @@ export default function Header() {
             </Box>
           </Hidden>
           <Hidden mdUp>
-            <IconButton>
-              <MenuIcon onClick={() => setOpen(true)}></MenuIcon>
+            <IconButton onClick={() => setOpen(true)}>
+              <MenuIcon></MenuIcon>
             </IconButton>
           </Hidden>
         </Toolbar>
@@ -72,12 +73,13 @@ export default function Header() {
         open={open}
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
+        PaperProps={{
+          sx: { width: "35%" },
+        }}
       >
-        <div>
-          <IconButton>
-            <ChevronLeftIcon onClick={() => setOpen(false)}></ChevronLeftIcon>
-          </IconButton>
-        </div>
+        <IconButton onClick={() => setOpen(false)}>
+          <ChevronLeftIcon></ChevronLeftIcon>
+        </IconButton>
         <Divider />
         <List component="nav">
           <ListItemButton onClick={() => toPage("/")}>
