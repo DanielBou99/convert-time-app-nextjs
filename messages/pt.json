@@ -11,6 +11,7 @@
     "helpToLocal": "Escolha qual local você deseja saber o tempo em comparação com o local e o horário fornecidos anteriormente"
   },
   "TranslateSelector": {
+    "language": "Idioma",
     "languages": {
       "labelPt": "Português",
       "codePt": "pt",     

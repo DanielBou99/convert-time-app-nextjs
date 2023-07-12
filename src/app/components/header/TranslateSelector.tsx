@@ -89,12 +89,12 @@ export default function TranslateSelector() {
   return (
     <CookiesProvider>
       <FormControl fullWidth>
-        <InputLabel id="language-select">Language</InputLabel>
+        <InputLabel id="language-select">{t("language")}</InputLabel>
         <Select
           labelId="language-select"
           id="language-select"
           value={selectedLanguage}
-          label="Language"
+          label={t("language")}
           onChange={changeLanguage}
           input={<BootstrapInput />}
         >

@@ -11,6 +11,7 @@
     "helpToLocal": "Choose which location you want to know the time compared to the previously provided location and time"
   },
   "TranslateSelector": {
+    "language": "Language",
     "languages": {
       "labelPt": "Portuguese",
       "codePt": "pt",     
