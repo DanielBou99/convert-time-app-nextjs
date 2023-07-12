@@ -63,7 +63,7 @@ export default function Header() {
           </Hidden>
           <Hidden mdUp>
             <IconButton onClick={() => setOpen(true)}>
-              <MenuIcon></MenuIcon>
+              <MenuIcon sx={{ color: "#FFF" }}></MenuIcon>
             </IconButton>
           </Hidden>
         </Toolbar>
