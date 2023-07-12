@@ -17,9 +17,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useState } from "react";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import ListItemText from "@mui/material/ListItemText";
-//import Link from "next-intl/link";
 import { useRouter } from "next-intl/client";
 import TranslateSelector from "./TranslateSelector";
 import HomeIcon from "@mui/icons-material/Home";
