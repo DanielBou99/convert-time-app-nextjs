@@ -17,5 +17,8 @@
       "labelEn": "English",
       "codeEn": "en"
     }  
+  },
+  "About": {
+    "title": "About"
   }
 }

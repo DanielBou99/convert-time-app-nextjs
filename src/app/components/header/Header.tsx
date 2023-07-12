@@ -38,7 +38,7 @@ export default function Header() {
   };
 
   return (
-    <AppBar position="sticky" color="default">
+    <AppBar position="absolute" color="primary">
       <Container maxWidth="md">
         <Toolbar disableGutters>
           <Hidden mdDown>
@@ -48,7 +48,7 @@ export default function Header() {
                   <Typography
                     component="h1"
                     variant="h6"
-                    color="inherit"
+                    color="#FFF"
                     noWrap
                     sx={{ flexGrow: 1 }}
                   >
