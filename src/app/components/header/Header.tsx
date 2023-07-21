@@ -22,10 +22,12 @@ import { useRouter } from "next-intl/client";
 import TranslateSelector from "./TranslateSelector";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 const navigationLinks = [
   { id: 1, name: "Home", href: "/" },
   { id: 2, name: "About", href: "/about" },
+  { id: 2, name: "Management", href: "/management" }
 ];
 
 export default function Header() {
@@ -93,6 +95,12 @@ export default function Header() {
               <InfoIcon />
             </ListItemIcon>
             <ListItemText primary="About" />
+          </ListItemButton>
+          <ListItemButton onClick={() => toPage("/management")}>
+            <ListItemIcon>
+              <ListAltIcon />
+            </ListItemIcon>
+            <ListItemText primary="Management" />
           </ListItemButton>
           <TranslateSelector />
         </List>
