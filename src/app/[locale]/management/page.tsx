@@ -9,6 +9,7 @@ import {
   IconButton,
   Link,
   Paper,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -80,22 +81,28 @@ export default function Management() {
               <Typography sx={{ mb: 1 }} color="text.secondary">
                 {task.name}
               </Typography>
-              <IconButton
-                onClick={() => changeShowDetailCard(task, allTasks, setter)}
-              >
-                {!task.showDetails && <KeyboardArrowDownIcon />}
-                {task.showDetails && <KeyboardArrowUpIcon />}
-              </IconButton>
+              <Tooltip title="Detalhes" enterTouchDelay={0} placement="right">
+                <IconButton
+                  onClick={() => changeShowDetailCard(task, allTasks, setter)}
+                >
+                  {!task.showDetails && <KeyboardArrowDownIcon />}
+                  {task.showDetails && <KeyboardArrowUpIcon />}
+                </IconButton>
+              </Tooltip>
             </Box>
             {task.status === 1 && (
-              <IconButton onClick={() => changeStatus(task, 2)}>
-                <ArrowForwardIcon></ArrowForwardIcon>
-              </IconButton>
+              <Tooltip title="Mover para CAB" enterTouchDelay={0} placement="top">
+                <IconButton onClick={() => changeStatus(task, 2)}>
+                  <ArrowForwardIcon></ArrowForwardIcon>
+                </IconButton>
+              </Tooltip>
             )}
             {task.status === 2 && (
-              <IconButton onClick={() => changeStatus(task, 1)}>
-                <ArrowBackIcon></ArrowBackIcon>
-              </IconButton>
+              <Tooltip title="Mover para Staging" enterTouchDelay={0} placement="top">
+                <IconButton onClick={() => changeStatus(task, 1)}>
+                  <ArrowBackIcon></ArrowBackIcon>
+                </IconButton>
+              </Tooltip>
             )}
           </Box>
 
